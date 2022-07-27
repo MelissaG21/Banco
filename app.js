@@ -3,10 +3,24 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var transactionsRouter = require('./routes/bank_transactions')
+
+const uri = "mongodb+srv://MelissaG:admin@cluster0.lzpzf.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(uri);
+
+const db = mongoose.connection;
+
+db.on('error', ()=>{
+  console.log("No se ha podido conectar a la base de datos");
+});
+
+db.on('open', ()=>{
+  console.log("Conexion correcta");
+});
 
 var app = express();
 
